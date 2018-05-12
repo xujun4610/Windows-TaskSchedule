@@ -16,9 +16,37 @@ namespace Windows.TaskSchedule.Utility
     {
         private static readonly string ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Configs", "Jobs.config");
         private static readonly XDocument Doc = XDocument.Load(ConfigPath);
+        /// <summary>
+        /// windows 服务名称
+        /// </summary>
         public static readonly string ServerName = Doc.Element("Jobs").Attribute("serverName").Value;
-        public static readonly string Description = Doc.Element("Jobs").Attribute("description").Value;
+        /// <summary>
+        /// Windows 服务友好显示名称
+        /// </summary>
         public static readonly string DisplayName = Doc.Element("Jobs").Attribute("displayName").Value;
+        /// <summary>
+        /// windows 服务描述
+        /// </summary>
+        public static readonly string Description = Doc.Element("Jobs").Attribute("description").Value;
+
+        #region const 专区
+        private const string P_WORK_DIR = "workDir";
+
+        private const string P_JOB_TYPE = "type";
+        private const string P_EXE_PATH = "exePath";
+        /// <summary>
+        /// 有效期（单位：sec）,过期停止任务
+        /// </summary>
+        private const string P_EXP_SEC = "expireSecond";
+        /// <summary>
+        /// 是否运行于沙河中
+        /// </summary>
+        private const string P_RUN_SAND = "runInSandbox";
+        /// <summary>
+        /// xml中 true false
+        /// </summary>
+        private const string P_FALSE_STR = "false", P_TRUE_STR = "true";
+        #endregion
 
         private static List<JobObject> _jobs = new List<JobObject>();
 
@@ -88,28 +116,27 @@ namespace Windows.TaskSchedule.Utility
             foreach (var p in jobs)
             {
                 JobObject job = new JobObject();
-                if (p.Attributes().Any(o => o.Name.ToString() == "type") && p.Attributes().Any(o => o.Name.ToString() == "exePath"))
+                if (p.Attributes().Any(o => o.Name.ToString() == P_JOB_TYPE) && p.Attributes().Any(o => o.Name.ToString() == P_EXE_PATH))
                 {
                     throw new Exception("job中不能同时配制“type”与“exePath”");
                 }
-                if (p.Attributes().Any(o => o.Name.ToString() == "type"))
+                if (p.Attributes().Any(o => o.Name.ToString() == P_JOB_TYPE))
                 {
                     job.JobType = JobTypeEnum.Assembly;
-                    string assembly = p.Attribute("type").Value.Split(',')[1];
-                    string className = p.Attribute("type").Value.Split(',')[0];
-
-                    string runInSandbox = "false";
-                    if (p.Attributes().Any(o => o.Name.ToString() == "runInSandbox"))
+                    string assembly = p.Attribute(P_JOB_TYPE).Value.Split(',')[1];
+                    string className = p.Attribute(P_JOB_TYPE).Value.Split(',')[0];
+                    //沙盒模式（true 开启，false 关闭-默认值）
+                    string runInSandbox = P_FALSE_STR;
+                    if (p.Attributes().Any(o => o.Name.ToString() == P_RUN_SAND))
                     {
-                        runInSandbox = p.Attribute("runInSandbox").Value;
+                        runInSandbox = p.Attribute(P_RUN_SAND).Value;
                     }
 
-                    Random r = new Random();
                     string config = assembly + ".dll.config";
                     string workDir = "Bin";
-                    if (p.Attributes().Any(o => o.Name.ToString() == "workDir"))
+                    if (p.Attributes().Any(o => o.Name.ToString() == P_WORK_DIR))
                     {
-                        workDir = p.Attribute("workDir").Value;
+                        workDir = p.Attribute(P_WORK_DIR).Value;
                         if (!File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, workDir, config)))
                         {
                             config = null;
@@ -122,14 +149,14 @@ namespace Windows.TaskSchedule.Utility
                     job.TypeName = className;
 
                 }
-                if (p.Attributes().Any(o => o.Name.ToString() == "expireSecond"))
+                if (p.Attributes().Any(o => o.Name.ToString() == P_EXP_SEC))
                 {
-                    job.ExpireSecond = int.Parse(p.Attribute("expireSecond").Value);
+                    job.ExpireSecond = int.Parse(p.Attribute(P_EXP_SEC).Value);
                 }
-                if (p.Attributes().Any(o => o.Name.ToString() == "exePath"))
+                if (p.Attributes().Any(o => o.Name.ToString() == P_EXE_PATH))
                 {
                     job.JobType = JobTypeEnum.Exe;
-                    job.ExePath = p.Attribute("exePath").Value.Replace("${basedir}", AppDomain.CurrentDomain.BaseDirectory);
+                    job.ExePath = p.Attribute(P_EXE_PATH).Value.Replace("${basedir}", AppDomain.CurrentDomain.BaseDirectory);
                     if (p.Attributes().Any(o => o.Name.ToString() == "arguments"))
                     {
                         job.Arguments = p.Attribute("arguments").Value;

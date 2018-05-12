@@ -12,7 +12,9 @@ namespace Windows.TaskSchedule.Extends
 {
     public class DefaultLogger
     {
+        static string assemblyName = typeof(DefaultLogger).Assembly.GetName().Name;
         static Logger logger;
+        public static Configuration appConfig; //dll.config
         static object lockObj = new object();
 
         static DefaultLogger()
@@ -43,9 +45,13 @@ namespace Windows.TaskSchedule.Extends
                 LogManager.Configuration.Variables.Add(new KeyValuePair<string, NLog.Layouts.SimpleLayout>("LOG_FILE_PATH", new NLog.Layouts.SimpleLayout(LOG_FILE_PATH)));
                 lock (lockObj)
                 {
-                    if (logger == null)
-                    {
+                    if (null == logger)
                         logger = LogManager.GetCurrentClassLogger();
+                    if (null == appConfig)
+                    {
+                        var map = new System.Configuration.ExeConfigurationFileMap();
+                        map.ExeConfigFilename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, assemblyName + ".dll.config");
+                        appConfig = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(map, System.Configuration.ConfigurationUserLevel.None);
                     }
                 }
             }

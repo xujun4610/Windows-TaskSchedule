@@ -26,3 +26,8 @@ Windows下的任务调试框架， 支持Cron表达式，支持任务以插件�
 3. dll反射模式默认会加载workDir中与dll同名的后缀为.config的配置文件。
 4. Windows.TaskSchedule.JobFactory.Ijob 接口只保留Excute方法。
 5. 此版本不再兼容2.0版本。
+
+**2018-5-12**
+
+1. 增加服务安装脚本 O(∩_∩)O 当然了，配置详细的Windows服务名称，还是需要到Jobs.Config文件下进行配置
+2. 另外：这玩意就是小项目用一用，大项目建议使用专业点的Quartz

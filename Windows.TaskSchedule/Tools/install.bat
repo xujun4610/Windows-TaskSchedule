@@ -1,4 +1,4 @@
-ï»¿@echo off
+@echo off
 %1 mshta vbscript:CreateObject("Shell.Application").ShellExecute("cmd.exe","/c %~s0 ::","","runas",1)(window.close)&&exit
 cd /d "%~dp0"
 :main
@@ -6,60 +6,60 @@ cls
 
 echo.--------------------------------------------------------
 echo.
-echo. Niko.Xu åˆ¶ä½œçš„ Windows Service å®‰è£…è„šæœ¬ copyright 2018
+echo. Niko.Xu ÖÆ×÷µÄ Windows Service °²×°½Å±¾ copyright 2018
 echo.
 echo.--------------------------------------------------------
-echo.å¦‚æœ‰360ã€ç”µè„‘ç®¡å®¶ç­‰å®‰å…¨è½¯ä»¶æé†’ï¼Œè¯·å‹¾é€‰ä¿¡ä»»å…è®¸å’Œä¸å†æé†’ï¼
-echo.æˆ–è€…å¹²è„†å…³é—­å§ï¼æƒé™ä¸å¤Ÿçƒ¦æ­»äº†ã€‚
+echo.ÈçÓÐ360¡¢µçÄÔ¹Ü¼ÒµÈ°²È«Èí¼þÌáÐÑ£¬Çë¹´Ñ¡ÐÅÈÎÔÊÐíºÍ²»ÔÙÌáÐÑ£¡
+echo.»òÕß¸É´à¹Ø±Õ°É£¡È¨ÏÞ²»¹»·³ËÀÁË¡£
 echo.
-echo.æ›´æ–°åœ°å€ï¼šhttps://github.com/xujun4610/Windows-TaskSchedule
-echo.ååˆ†æ„Ÿè°¢ leleroyn çš„åŽŸé¡¹ç›®ï¼ˆhttps://github.com/leleroyn/Windows-TaskScheduleï¼‰
+echo.¸üÐÂµØÖ·£ºhttps://github.com/xujun4610/Windows-TaskSchedule
+echo.Ê®·Ö¸ÐÐ» leleroyn µÄÔ­ÏîÄ¿£¨https://github.com/leleroyn/Windows-TaskSchedule£©
 echo.--------------------------------------------------------
-echo.è¯·é€‰æ‹©ä½¿ç”¨ï¼š
+echo.ÇëÑ¡ÔñÊ¹ÓÃ£º
 echo.
-echo. 1.å®‰è£…æœåŠ¡ï¼ˆå³åœ¨ä¸‹é¢è¾“å…¥1ï¼‰
+echo. 1.°²×°·þÎñ£¨¼´ÔÚÏÂÃæÊäÈë1£©
 echo.
-echo. 2.å¸è½½æœåŠ¡ï¼ˆå³åœ¨ä¸‹é¢è¾“å…¥2ï¼‰
+echo. 2.Ð¶ÔØ·þÎñ£¨¼´ÔÚÏÂÃæÊäÈë2£©
 echo.--------------------------------------------------------
 
 if exist "%SystemRoot%\System32\choice.exe" goto NT6Choice
 
-set /p choice=è¯·è¾“å…¥æ•°å­—å¹¶æŒ‰å›žè½¦é”®ç¡®è®¤:
+set /p choice=ÇëÊäÈëÊý×Ö²¢°´»Ø³µ¼üÈ·ÈÏ:
 
 echo.
 if %choice%==1 goto install-svc
 if %choice%==2 goto uninstall-svc
 cls
 "set choice="
-echo æ‚¨è¾“å…¥æœ‰è¯¯ï¼Œè¯·é‡æ–°é€‰æ‹©ã€‚
+echo ÄúÊäÈëÓÐÎó£¬ÇëÖØÐÂÑ¡Ôñ¡£
 
 goto main
 
 :NT6Choice
-choice /c 12 /n /m "è¯·è¾“å…¥ç›¸åº”æ•°å­—ï¼š"
+choice /c 12 /n /m "ÇëÊäÈëÏàÓ¦Êý×Ö£º"
 if errorlevel 2 goto uninstall-svc
 if errorlevel 1 goto install-svc
 cls
 goto main
 
 :install-svc
-REM å®‰è£…é€»è¾‘
+REM °²×°Âß¼­
 ..\Windows.TaskSchedule.exe install
-REM å®‰è£…é€»è¾‘ç»“æŸ
+REM °²×°Âß¼­½áÊø
 echo.-----------------------------------------------------------
-echo. Windows æœåŠ¡å®‰è£…ç»ˆäº†
+echo. Windows ·þÎñ°²×°ÖÕÁË
 echo.-----------------------------------------------------------
 goto end
 
 :uninstall-svc
-REM å¸è½½é€»è¾‘
+REM Ð¶ÔØÂß¼­
 ..\Windows.TaskSchedule.exe uninstall
 echo.-----------------------------------------------------------
-echo. Windows æœåŠ¡å¸è½½ç»ˆäº†
+echo. Windows ·þÎñÐ¶ÔØÖÕÁË
 echo.-----------------------------------------------------------
-REM å¸è½½é€»è¾‘ç»“æŸ
+REM Ð¶ÔØÂß¼­½áÊø
 goto end
 
 :end
-echo è¯·æŒ‰ä»»æ„é”®é€€å‡ºã€‚
+echo Çë°´ÈÎÒâ¼üÍË³ö¡£
 @Pause>nul

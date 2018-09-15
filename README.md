@@ -32,6 +32,6 @@ Windows下的任务调试框架， 支持Cron表达式，支持任务以插件�
 1. 增加服务安装脚本 O(∩_∩)O 当然了，配置详细的Windows服务名称，还是需要到Jobs.Config文件下进行配置
 2. 另外：这玩意就是小项目用一用，大项目建议使用专业点的Quartz
 
-**2018-5-12**
+**2018-9-15**
 
 1. 修改DefaultLogger的问题，可以跨项目使用了！例如：您在Helloworld项目中继承了DefaultLogger，那么您的config配置xml文件，位于Helloworld.dll.config下。

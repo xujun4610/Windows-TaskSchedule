@@ -47,16 +47,23 @@ namespace Windows.TaskSchedule.Utility
 
         public void Execute(string assemblyName, string typeName, string methodName, params object[] parameters)
         {
-            var assembly = Assembly.Load(assemblyName);
+            try
+            {
+                var assembly = Assembly.Load(assemblyName);
+                Type type = assembly.GetType(typeName);
+                if (type == null)
+                    return;
 
-            Type type = assembly.GetType(typeName);
-            if (type == null)
-                return;
+                var instance = Activator.CreateInstance(type);
 
-            var instance = Activator.CreateInstance(type);
-
-            MethodInfo method = type.GetMethod(methodName);
-            method.Invoke(instance, parameters);
+                MethodInfo method = type.GetMethod(methodName);
+                method.Invoke(instance, parameters);
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
+            
         }
 
         public void Dispose()

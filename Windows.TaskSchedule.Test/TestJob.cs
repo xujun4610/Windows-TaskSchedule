@@ -7,11 +7,12 @@ using Windows.TaskSchedule.Extends;
 
 namespace Windows.TaskSchedule.Test
 {
-    public class TestJob : DefaultLogger, IJob
+    public class TestJob : DefaultLogger<TestJob>, IJob
     {
         public void Excute()
         {
-            Logger.Info(DateTime.Now.ToShortDateString());
+            var str = AppConfig.AppSettings.Settings["hello"].Value;
+            Logger.Info(string.Format("{0}-{1}[{2}]", str, "新GUID", Guid.NewGuid().ToString()));
         }
     }
 }

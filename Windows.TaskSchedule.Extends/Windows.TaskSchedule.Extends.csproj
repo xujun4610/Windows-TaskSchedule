@@ -53,6 +53,7 @@
     <Compile Include="DefaultLogger.cs" />
     <Compile Include="DemoJob.cs" />
     <Compile Include="IJob.cs" />
+    <Compile Include="LoggerStatic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

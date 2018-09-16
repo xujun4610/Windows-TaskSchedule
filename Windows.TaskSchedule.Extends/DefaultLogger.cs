@@ -10,15 +10,19 @@ using NLog.Config;
 
 namespace Windows.TaskSchedule.Extends
 {
-    public class DefaultLogger
+    public class DefaultLogger<T>  // where T : IJob
     {
-        static string currentassemblyName = AppDomain.CurrentDomain.FriendlyName;   ///typeof(DefaultLogger).Assembly.GetName().Name;
-        static Logger logger;
-        public static Configuration appConfig; //dll.config
+        public static string currentassemblyName; ///typeof(DefaultLogger).Assembly.GetName().Name;
+        //static Logger logger;
+        //public static Configuration appConfig; //dll.config
         static object lockObj = new object();
 
-        static DefaultLogger()
+        public DefaultLogger()
         {
+            //if (string.IsNullOrWhiteSpace(currentassemblyName))
+            //{
+            //    currentassemblyName= AppDomain.CurrentDomain.FriendlyName;
+            //}
             InitConfig();
         }
         /// <summary>
@@ -28,38 +32,53 @@ namespace Windows.TaskSchedule.Extends
         {
             get
             {
-                return logger;
+                return LoggerStatic.logger;
+            }
+            private set
+            {
+                LoggerStatic.logger = value;
+            }
+        }
+
+        public Configuration AppConfig
+        {
+            get
+            {
+                return LoggerStatic.appConfig;
+            }
+            private set
+            {
+                LoggerStatic.appConfig = value;
             }
         }
         /// <summary>
         /// 初始化Nlog配置
         /// </summary>
-        private static void InitConfig()
+        private void InitConfig()
         {
             try
             {
-                if (logger == null)
+                currentassemblyName = typeof(T).Module.ToString();
+                string LOG_FILE_PATH = ConfigurationManager.AppSettings["LOG_FILE_PATH"] ?? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
+                string xmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Configs", "NLog.config");
+                if (!File.Exists(xmlPath)) throw new FileNotFoundException("配置文件不存在！位于：" + xmlPath);
+                XmlLoggingConfiguration config = new XmlLoggingConfiguration(xmlPath, false);
+                LogManager.Configuration = config;
+                LogManager.Configuration.Variables.Add(new KeyValuePair<string, NLog.Layouts.SimpleLayout>("LOG_FILE_PATH", new NLog.Layouts.SimpleLayout(LOG_FILE_PATH)));
+                lock (lockObj)
                 {
-                    string LOG_FILE_PATH = ConfigurationManager.AppSettings["LOG_FILE_PATH"] ?? Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
-                    string xmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Configs", "NLog.config");
-                    if (!File.Exists(xmlPath)) throw new FileNotFoundException("配置文件不存在！位于：" + xmlPath);
-                    XmlLoggingConfiguration config = new XmlLoggingConfiguration(xmlPath, false);
-                    LogManager.Configuration = config;
-                    LogManager.Configuration.Variables.Add(new KeyValuePair<string, NLog.Layouts.SimpleLayout>("LOG_FILE_PATH", new NLog.Layouts.SimpleLayout(LOG_FILE_PATH)));
-                    lock (lockObj)
+                    if (null == Logger)
+                        Logger = LogManager.GetCurrentClassLogger();
+                    if (null == AppConfig)
                     {
-                        if (null == logger)
-                            logger = LogManager.GetCurrentClassLogger();
-                        if (null == appConfig)
-                        {
-                            var map = new System.Configuration.ExeConfigurationFileMap();
-                            map.ExeConfigFilename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, currentassemblyName + ".config");
-                            appConfig = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(map, System.Configuration.ConfigurationUserLevel.None);
-                        }
+                        var map = new System.Configuration.ExeConfigurationFileMap();
+                        map.ExeConfigFilename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, currentassemblyName + ".config");
+                        AppConfig = System.Configuration.ConfigurationManager.OpenMappedExeConfiguration(map, System.Configuration.ConfigurationUserLevel.None);
+                        Logger.Info(map.ExeConfigFilename);
                     }
                 }
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }

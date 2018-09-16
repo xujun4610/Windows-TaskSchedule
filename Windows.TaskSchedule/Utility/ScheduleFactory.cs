@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace Windows.TaskSchedule.Utility
 {
-    public class ScheduleFactory : DefaultLogger
+    public class ScheduleFactory : DefaultLogger<ScheduleFactory>
     {
         private static readonly string ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Configs", "Jobs.config");
         private static readonly XDocument Doc = XDocument.Load(ConfigPath);

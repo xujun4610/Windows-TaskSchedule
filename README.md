@@ -35,3 +35,9 @@ Windows下的任务调试框架， 支持Cron表达式，支持任务以插件�
 **2018-9-15**
 
 1. 修改DefaultLogger的问题，可以跨项目使用了！例如：您在Helloworld项目中继承了DefaultLogger，那么您的config配置xml文件，位于Helloworld.dll.config下。
+
+**2019-09-28**
+
+1. 修改Cron表达式类。
+2. 修复指定时刻运行Job导致Cron表达式验证函数总返回False的问题。
+3. 增加测试DEMO和部分依赖。

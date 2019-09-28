@@ -6,7 +6,9 @@ cls
 REM title
 echo.*************************************************************************
 echo.
-echo. Niko.Xu 制作的 Windows Service 安装脚本，制作日期：2018-05-12
+echo. Niko.Xu 制作的 Windows Service 安装脚本，版本：1
+echo. 制作日期：2018-05-12
+echo. 
 echo. 适用于安装如下软件：
 echo.     Windows-TaskSchedule
 echo.
@@ -15,7 +17,7 @@ echo. ? %date:~0,4%  Niko Xu Production, All rights reserved.
 echo.
 echo.*************************************************************************
 echo.如有360、电脑管家等安全软件提醒，请勾选信任允许和不再提醒！
-echo.或者干脆关闭吧！权限不够烦死了。
+echo.或者干脆关闭吧！PS:安装时需要管理员权限授权！
 echo.
 echo.更新地址：https://github.com/xujun4610/Windows-TaskSchedule
 echo.十分感谢 leleroyn 的原项目（https://github.com/leleroyn/Windows-TaskSchedule）
@@ -57,7 +59,7 @@ echo Installing...
 ..\Windows.TaskSchedule.exe install
 REM 安装逻辑结束
 echo.-----------------------------------------------------------
-echo. 【提示】 Windows 服务安装终了
+echo. 【提示】 Windows Service 安装完成！
 echo.-----------------------------------------------------------
 goto end
 
@@ -70,7 +72,7 @@ echo.-----------------------------------------------------------
 echo Uninstalling...
 ..\Windows.TaskSchedule.exe uninstall
 echo.-----------------------------------------------------------
-echo. 【提示】 Windows 服务卸载终了
+echo. 【提示】 Windows Service 卸载完成！
 echo.-----------------------------------------------------------
 REM 卸载逻辑结束
 goto end

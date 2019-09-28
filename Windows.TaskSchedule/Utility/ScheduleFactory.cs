@@ -230,6 +230,7 @@ namespace Windows.TaskSchedule.Utility
             }
             catch (Exception ex) //不处理错误，防止日志爆长
             {
+                Logger.Error(string.Format("加载依赖时候出现异常!\r\n消息：{0}\r\n堆栈：{1}", ex.Message, ex.StackTrace));
                 try
                 {
                     if (job.JobType == JobTypeEnum.Assembly)
@@ -237,9 +238,10 @@ namespace Windows.TaskSchedule.Utility
                         job.Sandbox.Execute(job.AssemblyName, job.TypeName, "OnError", ex);
                     }
                 }
-                catch
+                catch (Exception e)
                 {
                     // ignored
+                    Logger.Error(string.Format("加载处理异常依赖时候出现异常!\r\n消息：{0}\r\n堆栈：{1}", e.Message, e.StackTrace));                    
                 }
             }
         }

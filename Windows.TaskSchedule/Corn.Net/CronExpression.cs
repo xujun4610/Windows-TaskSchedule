@@ -211,66 +211,66 @@ namespace Quartz
     [Serializable]
     public class CronExpression : ICloneable, IDeserializationCallback
     {
-		/// <summary>
-		/// Field specification for second.
-		/// </summary>
+        /// <summary>
+        /// Field specification for second.
+        /// </summary>
         protected const int Second = 0;
 
-		/// <summary>
-		/// Field specification for minute.
-		/// </summary>
-		protected const int Minute = 1;
-        
-		/// <summary>
-		/// Field specification for hour.
-		/// </summary>
-		protected const int Hour = 2;
-        
-		/// <summary>
-		/// Field specification for day of month.
-		/// </summary>
-		protected const int DayOfMonth = 3;
-        
-		/// <summary>
-		/// Field specification for month.
-		/// </summary>
-		protected const int Month = 4;
-        
-		/// <summary>
-		/// Field specification for day of week.
-		/// </summary>
-		protected const int DayOfWeek = 5;
-        
-		/// <summary>
-		/// Field specification for year.
-		/// </summary>
-		protected const int Year = 6;
-        
-		/// <summary>
-		/// Field specification for all wildcard value '*'.
-		/// </summary>
-		protected const int AllSpecInt = 99; // '*'
-        
-		/// <summary>
-		/// Field specification for not specified value '?'.
-		/// </summary>
-		protected const int NoSpecInt = 98; // '?'
-        
-		/// <summary>
-		/// Field specification for wildcard '*'.
-		/// </summary>
-		protected const int AllSpec = AllSpecInt;
-		
-		/// <summary>
-		/// Field specification for no specification at all '?'.
-		/// </summary>
-		protected const int NoSpec = NoSpecInt;
+        /// <summary>
+        /// Field specification for minute.
+        /// </summary>
+        protected const int Minute = 1;
+
+        /// <summary>
+        /// Field specification for hour.
+        /// </summary>
+        protected const int Hour = 2;
+
+        /// <summary>
+        /// Field specification for day of month.
+        /// </summary>
+        protected const int DayOfMonth = 3;
+
+        /// <summary>
+        /// Field specification for month.
+        /// </summary>
+        protected const int Month = 4;
+
+        /// <summary>
+        /// Field specification for day of week.
+        /// </summary>
+        protected const int DayOfWeek = 5;
+
+        /// <summary>
+        /// Field specification for year.
+        /// </summary>
+        protected const int Year = 6;
+
+        /// <summary>
+        /// Field specification for all wildcard value '*'.
+        /// </summary>
+        protected const int AllSpecInt = 99; // '*'
+
+        /// <summary>
+        /// Field specification for not specified value '?'.
+        /// </summary>
+        protected const int NoSpecInt = 98; // '?'
+
+        /// <summary>
+        /// Field specification for wildcard '*'.
+        /// </summary>
+        protected const int AllSpec = AllSpecInt;
+
+        /// <summary>
+        /// Field specification for no specification at all '?'.
+        /// </summary>
+        protected const int NoSpec = NoSpecInt;
 
         private static readonly Hashtable monthMap = new Hashtable(20);
         private static readonly Hashtable dayMap = new Hashtable(60);
 
         private readonly string cronExpressionString = null;
-        
+
         private TimeZone timeZone = null;
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace Quartz
             {
                 DateTime newDate = GetTimeAfter(lastDate).Value;
 
-                difference = (long) (newDate - lastDate).TotalMilliseconds;
+                difference = (long)(newDate - lastDate).TotalMilliseconds;
 
                 if (difference == 1000)
                 {
@@ -513,10 +513,10 @@ namespace Quartz
         //
         ////////////////////////////////////////////////////////////////////////////
 
-		/// <summary>
-		/// Builds the expression.
-		/// </summary>
-		/// <param name="expression">The expression.</param>
+        /// <summary>
+        /// Builds the expression.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
         protected void BuildExpression(string expression)
         {
             expressionParsed = true;
@@ -557,16 +557,16 @@ namespace Quartz
 #if NET_20
                 string[] exprsTok = expression.Trim().Split(new char[] { ' ', '\t', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
 #else
-				string[] exprsTok = expression.Trim().Split(new char[] { ' ', '\t', '\r', '\n' });
+                string[] exprsTok = expression.Trim().Split(new char[] { ' ', '\t', '\r', '\n' });
 #endif
                 foreach (string exprTok in exprsTok)
                 {
                     string expr = exprTok.Trim();
 
-					if (expr.Length == 0)
-					{
-						continue;
-					}
+                    if (expr.Length == 0)
+                    {
+                        continue;
+                    }
                     if (exprOn > Year)
                     {
                         break;
@@ -632,13 +632,13 @@ namespace Quartz
             }
         }
 
-		/// <summary>
-		/// Stores the expression values.
-		/// </summary>
-		/// <param name="pos">The position.</param>
-		/// <param name="s">The string to traverse.</param>
-		/// <param name="type">The type of value.</param>
-		/// <returns></returns>
+        /// <summary>
+        /// Stores the expression values.
+        /// </summary>
+        /// <param name="pos">The position.</param>
+        /// <param name="s">The string to traverse.</param>
+        /// <param name="type">The type of value.</param>
+        /// <returns></returns>
         protected virtual int StoreExpressionVals(int pos, string s, int type)
         {
             int incr = 0;
@@ -750,7 +750,7 @@ namespace Quartz
                 }
                 if (type == DayOfWeek && !lastdayOfMonth)
                 {
-                    int val = (int) daysOfMonth[daysOfMonth.Count - 1];
+                    int val = (int)daysOfMonth[daysOfMonth.Count - 1];
                     if (val == NoSpecInt)
                     {
                         throw new FormatException(
@@ -879,14 +879,14 @@ namespace Quartz
             return i;
         }
 
-		/// <summary>
-		/// Checks the next value.
-		/// </summary>
-		/// <param name="pos">The position.</param>
-		/// <param name="s">The string to check.</param>
-		/// <param name="val">The value.</param>
-		/// <param name="type">The type to search.</param>
-		/// <returns></returns>
+        /// <summary>
+        /// Checks the next value.
+        /// </summary>
+        /// <param name="pos">The position.</param>
+        /// <param name="s">The string to check.</param>
+        /// <param name="val">The value.</param>
+        /// <param name="type">The type to search.</param>
+        /// <returns></returns>
         protected virtual int CheckNext(int pos, string s, int val, int type)
         {
             int end = -1;
@@ -1064,19 +1064,19 @@ namespace Quartz
             return i;
         }
 
-		/// <summary>
-		/// Gets the cron expression string.
-		/// </summary>
-		/// <value>The cron expression string.</value>
+        /// <summary>
+        /// Gets the cron expression string.
+        /// </summary>
+        /// <value>The cron expression string.</value>
         public string CronExpressionString
         {
             get { return cronExpressionString; }
         }
 
-		/// <summary>
-		/// Gets the expression summary.
-		/// </summary>
-		/// <returns></returns>
+        /// <summary>
+        /// Gets the expression summary.
+        /// </summary>
+        /// <returns></returns>
         public virtual string GetExpressionSummary()
         {
             StringBuilder buf = new StringBuilder();
@@ -1124,11 +1124,11 @@ namespace Quartz
             return buf.ToString();
         }
 
-		/// <summary>
-		/// Gets the expression set summary.
-		/// </summary>
-		/// <param name="data">The data.</param>
-		/// <returns></returns>
+        /// <summary>
+        /// Gets the expression set summary.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        /// <returns></returns>
         protected virtual string GetExpressionSetSummary(ISet data)
         {
             if (data.Contains(NoSpec))
@@ -1157,12 +1157,12 @@ namespace Quartz
             return buf.ToString();
         }
 
-		/// <summary>
-		/// Skips the white space.
-		/// </summary>
-		/// <param name="i">The i.</param>
-		/// <param name="s">The s.</param>
-		/// <returns></returns>
+        /// <summary>
+        /// Skips the white space.
+        /// </summary>
+        /// <param name="i">The i.</param>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
         protected virtual int SkipWhiteSpace(int i, string s)
         {
             for (; i < s.Length && (s[i] == ' ' || s[i] == '\t'); i++)
@@ -1375,11 +1375,11 @@ namespace Quartz
             }
         }
 
-		/// <summary>
-		/// Gets the set of given type.
-		/// </summary>
-		/// <param name="type">The type of set to get.</param>
-		/// <returns></returns>
+        /// <summary>
+        /// Gets the set of given type.
+        /// </summary>
+        /// <param name="type">The type of set to get.</param>
+        /// <returns></returns>
         protected virtual TreeSet GetSet(int type)
         {
             switch (type)
@@ -1459,7 +1459,7 @@ namespace Quartz
         {
             if (monthMap.ContainsKey(s))
             {
-                return (int) monthMap[s];
+                return (int)monthMap[s];
             }
             else
             {
@@ -1476,7 +1476,7 @@ namespace Quartz
         {
             if (dayMap.ContainsKey(s))
             {
-                return (int) dayMap[s];
+                return (int)dayMap[s];
             }
             else
             {
@@ -1484,15 +1484,15 @@ namespace Quartz
             }
         }
 
-		/// <summary>
-		/// Gets the time from given time parts.
-		/// </summary>
-		/// <param name="sc">The seconds.</param>
-		/// <param name="mn">The minutes.</param>
-		/// <param name="hr">The hours.</param>
-		/// <param name="dayofmn">The day of month.</param>
-		/// <param name="mon">The month.</param>
-		/// <returns></returns>
+        /// <summary>
+        /// Gets the time from given time parts.
+        /// </summary>
+        /// <param name="sc">The seconds.</param>
+        /// <param name="mn">The minutes.</param>
+        /// <param name="hr">The hours.</param>
+        /// <param name="dayofmn">The day of month.</param>
+        /// <param name="mon">The month.</param>
+        /// <returns></returns>
         protected virtual NullableDateTime GetTime(int sc, int mn, int hr, int dayofmn, int mon)
         {
             try
@@ -1525,11 +1525,11 @@ namespace Quartz
             }
         }
 
-		/// <summary>
-		/// Gets the next fire time after the given time.
-		/// </summary>
-		/// <param name="afterTimeUtc">The UTC time to start searching from.</param>
-		/// <returns></returns>
+        /// <summary>
+        /// Gets the next fire time after the given time.
+        /// </summary>
+        /// <param name="afterTimeUtc">The UTC time to start searching from.</param>
+        /// <returns></returns>
         public virtual NullableDateTime GetTimeAfter(DateTime afterTimeUtc)
         {
             // move ahead one second, since we're computing the time *after/// the
@@ -1540,9 +1540,7 @@ namespace Quartz
             DateTime d = CreateDateTimeWithoutMillis(afterTimeUtc);
 
             // change to specified time zone
-
             d = TimeZone.ToLocalTime(d);
-
 
             bool gotOne = false;
             // loop until we've computed the next time, or we've past the endTime
@@ -1556,11 +1554,11 @@ namespace Quartz
                 st = seconds.TailSet(sec);
                 if (st != null && st.Count != 0)
                 {
-                    sec = (int) st.First();
+                    sec = (int)st.First();
                 }
                 else
                 {
-                    sec = ((int) seconds.First());
+                    sec = ((int)seconds.First());
                     d = d.AddMinutes(1);
                 }
                 d = new DateTime(d.Year, d.Month, d.Day, d.Hour, d.Minute, sec, d.Millisecond);
@@ -1574,11 +1572,11 @@ namespace Quartz
                 if (st != null && st.Count != 0)
                 {
                     t = min;
-                    min = ((int) st.First());
+                    min = ((int)st.First());
                 }
                 else
                 {
-                    min = (int) minutes.First();
+                    min = (int)minutes.First();
                     hr++;
                 }
                 if (min != t)
@@ -1598,11 +1596,11 @@ namespace Quartz
                 if (st != null && st.Count != 0)
                 {
                     t = hr;
-                    hr = (int) st.First();
+                    hr = (int)st.First();
                 }
                 else
                 {
-                    hr = (int) hours.First();
+                    hr = (int)hours.First();
                     day++;
                 }
                 if (hr != t)
@@ -1668,7 +1666,7 @@ namespace Quartz
                             }
 
                             DateTime nTime = new DateTime(tcal.Year, mon, day, hr, min, sec, d.Millisecond);
-                            if (nTime.ToUniversalTime() < afterTimeUtc)
+                            if (nTime < afterTimeUtc)
                             {
                                 day = 1;
                                 mon++;
@@ -1678,7 +1676,7 @@ namespace Quartz
                     else if (nearestWeekday)
                     {
                         t = day;
-                        day = (int) daysOfMonth.First();
+                        day = (int)daysOfMonth.First();
 
                         DateTime tcal = new DateTime(d.Year, mon, day, 0, 0, 0);
 
@@ -1703,28 +1701,28 @@ namespace Quartz
                         }
 
                         tcal = new DateTime(tcal.Year, mon, day, hr, min, sec);
-                        if (tcal.ToUniversalTime() < afterTimeUtc)
+                        if (tcal < afterTimeUtc)
                         {
-                            day = ((int) daysOfMonth.First());
+                            day = ((int)daysOfMonth.First());
                             mon++;
                         }
                     }
                     else if (st != null && st.Count != 0)
                     {
                         t = day;
-                        day = (int) st.First();
+                        day = (int)st.First();
 
                         // make sure we don't over-run a short month, such as february
                         int lastDay = GetLastDayOfMonth(mon, d.Year);
                         if (day > lastDay)
                         {
-                            day = (int) daysOfMonth.First();
+                            day = (int)daysOfMonth.First();
                             mon++;
                         }
                     }
                     else
                     {
-                        day = ((int) daysOfMonth.First());
+                        day = ((int)daysOfMonth.First());
                         mon++;
                     }
 
@@ -1736,18 +1734,7 @@ namespace Quartz
                         }
                         else
                         {
-                            // This is to avoid a bug when moving from a month
-                            //with 30 or 31 days to a month with less. Causes an invalid datetime to be instantiated.
-                            // ex. 0 29 0 30 1 ? 2009 with clock set to 1/30/2009
-                            int lDay = DateTime.DaysInMonth(d.Year, mon); 
-                            if (day <= lDay)
-                            {
-                                d = new DateTime(d.Year, mon, day, 0, 0, 0);
-                            }
-                            else
-                            {
-                                d = new DateTime(d.Year, mon, lDay, 0, 0, 0).AddDays(day - lDay);
-                            } 
+                            d = new DateTime(d.Year, mon, day, 0, 0, 0);
                         }
                         continue;
                     }
@@ -1759,9 +1746,9 @@ namespace Quartz
                     {
                         // are we looking for the last XXX day of
                         // the month?
-                        int dow = ((int) daysOfWeek.First()); // desired
+                        int dow = ((int)daysOfWeek.First()); // desired
                         // d-o-w
-                        int cDow = ((int) d.DayOfWeek) + 1; // current d-o-w
+                        int cDow = ((int)d.DayOfWeek) + 1; // current d-o-w
                         int daysToAdd = 0;
                         if (cDow < dow)
                         {
@@ -1785,7 +1772,7 @@ namespace Quartz
                             }
                             else
                             {
-                            	d = new DateTime(d.Year, mon + 1, 1, 0, 0, 0);
+                                d = new DateTime(d.Year, mon + 1, 1, 0, 0, 0);
                             }
                             // we are promoting the month
                             continue;
@@ -1809,9 +1796,9 @@ namespace Quartz
                     else if (nthdayOfWeek != 0)
                     {
                         // are we looking for the Nth XXX day in the month?
-                        int dow = ((int) daysOfWeek.First()); // desired
+                        int dow = ((int)daysOfWeek.First()); // desired
                         // d-o-w
-                        int cDow = ((int) d.DayOfWeek) + 1; // current d-o-w
+                        int cDow = ((int)d.DayOfWeek) + 1; // current d-o-w
                         int daysToAdd = 0;
                         if (cDow < dow)
                         {
@@ -1829,13 +1816,13 @@ namespace Quartz
                         }
 
                         day += daysToAdd;
-                        int weekOfMonth = day/7;
-                        if (day%7 > 0)
+                        int weekOfMonth = day / 7;
+                        if (day % 7 > 0)
                         {
                             weekOfMonth++;
                         }
 
-                        daysToAdd = (nthdayOfWeek - weekOfMonth)*7;
+                        daysToAdd = (nthdayOfWeek - weekOfMonth) * 7;
                         day += daysToAdd;
                         if (daysToAdd < 0 || day > GetLastDayOfMonth(mon, d.Year))
                         {
@@ -1846,8 +1833,8 @@ namespace Quartz
                             else
                             {
                                 d = new DateTime(d.Year, mon + 1, 1, 0, 0, 0);
-                            } 
-                            
+                            }
+
                             // we are promoting the month
                             continue;
                         }
@@ -1860,13 +1847,13 @@ namespace Quartz
                     }
                     else
                     {
-                        int cDow = ((int) d.DayOfWeek) + 1; // current d-o-w
-                        int dow = ((int) daysOfWeek.First()); // desired
+                        int cDow = ((int)d.DayOfWeek) + 1; // current d-o-w
+                        int dow = ((int)daysOfWeek.First()); // desired
                         // d-o-w
                         st = daysOfWeek.TailSet(cDow);
                         if (st != null && st.Count > 0)
                         {
-                            dow = ((int) st.First());
+                            dow = ((int)st.First());
                         }
 
                         int daysToAdd = 0;
@@ -1892,7 +1879,7 @@ namespace Quartz
                             }
                             else
                             {
-                            	d = new DateTime(d.Year, mon + 1, 1, 0, 0, 0);
+                                d = new DateTime(d.Year, mon + 1, 1, 0, 0, 0);
                             }
                             // we are promoting the month
                             continue;
@@ -1929,11 +1916,11 @@ namespace Quartz
                 if (st != null && st.Count != 0)
                 {
                     t = mon;
-                    mon = ((int) st.First());
+                    mon = ((int)st.First());
                 }
                 else
                 {
-                    mon = ((int) months.First());
+                    mon = ((int)months.First());
                     year++;
                 }
                 if (mon != t)
@@ -1950,7 +1937,7 @@ namespace Quartz
                 if (st != null && st.Count != 0)
                 {
                     t = year;
-                    year = ((int) st.First());
+                    year = ((int)st.First());
                 }
                 else
                 {
@@ -2079,19 +2066,19 @@ namespace Quartz
         }
     }
 
-	/// <summary>
-	/// Helper class for cron expression handling.
-	/// </summary>
+    /// <summary>
+    /// Helper class for cron expression handling.
+    /// </summary>
     public class ValueSet
     {
-		/// <summary>
-		/// The value.
-		/// </summary>
+        /// <summary>
+        /// The value.
+        /// </summary>
         public int theValue;
 
-		/// <summary>
-		/// The position.
-		/// </summary>
-		public int pos;
+        /// <summary>
+        /// The position.
+        /// </summary>
+        public int pos;
     }
 }

@@ -64,6 +64,11 @@ namespace Windows.TaskSchedule.Utility
         /// 沙盒
         /// </summary>
         public Sandbox Sandbox { get; set; }
+        /// <summary>
+        /// 是否启用（作业执行开关）
+        /// </summary>
+        public bool Enabled { get; set; }
+
     }
 
     /// <summary>

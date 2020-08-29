@@ -46,6 +46,12 @@ namespace Windows.TaskSchedule.Utility
         /// xml中 true false
         /// </summary>
         private const string P_FALSE_STR = "false", P_TRUE_STR = "true";
+        /// <summary>
+        /// enabled 是否启用
+        /// </summary>
+        private const string P_ENABLED_FLAG = "enabled";
+
+
         #endregion
 
         private static List<JobObject> _jobs = new List<JobObject>();
@@ -56,8 +62,9 @@ namespace Windows.TaskSchedule.Utility
             ThreadPool.SetMinThreads(50, 50);
             _jobs = GetJobs();
             BatchProcess(_jobs);
-
-            Logger.Debug("共找到【{0}】个任务.", _jobs.Count);
+            int enabledJobs = _jobs.Count(c => c.Enabled == true);
+            int disabledJobs = _jobs.Count(c => c.Enabled == false);
+            Logger.Debug("共找到【{0}】个任务,启用【{1}】个任务，停用【{2}】个任务", _jobs.Count, enabledJobs, disabledJobs);
             Logger.Debug("当前服务运行目录:【{0}】.", AppDomain.CurrentDomain.BaseDirectory);
             Logger.Debug("服务启动成功.");
         }
@@ -92,9 +99,10 @@ namespace Windows.TaskSchedule.Utility
                         if (!job.Running)
                         {
                             job.Running = true;
-
-                            RunJob(job);
-
+                            if (job.Enabled) //当启用的时候（配置文件设置为Enabled = "true"时）
+                            {
+                                RunJob(job);
+                            }
                             job.Running = false;
                         }
                         System.Threading.Thread.Sleep(800);
@@ -141,8 +149,8 @@ namespace Windows.TaskSchedule.Utility
                         {
                             config = null;
                         }
-                    }                   
-                  
+                    }
+
                     //创建sandbox
                     job.Sandbox = Sandbox.Create(config, workDir);
                     job.AssemblyName = assembly;
@@ -167,7 +175,12 @@ namespace Windows.TaskSchedule.Utility
                 job.CornExpress = p.Attribute("cornExpress").Value;
                 if (!CronExpression.IsValidExpression(job.CornExpress))
                 {
-                    throw new Exception(string.Format("corn表达式：{0}不正确。", job.CornExpress));
+                    throw new Exception(string.Format("Job名称：{0}，corn表达式：{1}不正确。", job.Name, job.CornExpress));
+                }
+                if (p.Attributes().Any(c => c.Name.ToString().Equals(P_ENABLED_FLAG)))
+                {
+                    string enableValue = p.Attribute(P_ENABLED_FLAG).Value;
+                    job.Enabled = enableValue == P_TRUE_STR ? true : false;
                 }
                 result.Add(job);
             }
@@ -182,6 +195,7 @@ namespace Windows.TaskSchedule.Utility
         {
             try
             {
+
                 if (CornUtility.Trigger(job.CornExpress, DateTime.Parse(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"))))
                 {
                     if (!job.Triggering)
@@ -189,7 +203,7 @@ namespace Windows.TaskSchedule.Utility
                         job.Triggering = true;
                         switch (job.JobType)
                         {
-                            case JobTypeEnum.Assembly:                              
+                            case JobTypeEnum.Assembly:
                                 job.Sandbox.Execute(job.AssemblyName, job.TypeName, "Excute", null);
                                 break;
                             case JobTypeEnum.Exe:
@@ -241,7 +255,7 @@ namespace Windows.TaskSchedule.Utility
                 catch (Exception e)
                 {
                     // ignored
-                    Logger.Error(string.Format("加载处理异常依赖时候出现异常!\r\n消息：{0}\r\n堆栈：{1}", e.Message, e.StackTrace));                    
+                    Logger.Error(string.Format("加载处理异常依赖时候出现异常!\r\n消息：{0}\r\n堆栈：{1}", e.Message, e.StackTrace));
                 }
             }
         }

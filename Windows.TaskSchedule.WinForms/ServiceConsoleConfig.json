@@ -1,0 +1,10 @@
+﻿{
+  //注释：日志文件夹名称
+  "LogFolderName": "logs",
+  //注释：job配置文件位置
+  "JobFilePath": "Configs\\Jobs.config",
+  //注释：windowsservice的安装
+  "WSInstallPath": "Tools\\install.bat",
+  //注释：【维护工具】按钮执行exe路径！
+  "MaintenancePath": "\\maintenance_tools.exe"
+}

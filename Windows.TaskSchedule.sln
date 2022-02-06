@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows.TaskSchedule", "Windows.TaskSchedule\Windows.TaskSchedule.csproj", "{0F3BC01C-D251-450D-AB2A-B4AB2F2A4EE3}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows.TaskSchedule.Test", "Windows.TaskSchedule.Test\Windows.TaskSchedule.Test.csproj", "{3E7175F5-C87B-4C5B-8E14-BE384872A003}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows.TaskSchedule.UnitTest", "Windows.TaskSchedule.UnitTest\Windows.TaskSchedule.UnitTest.csproj", "{15378FE8-DFED-4676-83EA-7808C7E57D60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows.TaskSchedule.WinForms", "Windows.TaskSchedule.WinForms\Windows.TaskSchedule.WinForms.csproj", "{809B0448-E23B-4CBF-916A-7FA4015099D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,15 @@ Global
 		{15378FE8-DFED-4676-83EA-7808C7E57D60}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15378FE8-DFED-4676-83EA-7808C7E57D60}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15378FE8-DFED-4676-83EA-7808C7E57D60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{809B0448-E23B-4CBF-916A-7FA4015099D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{809B0448-E23B-4CBF-916A-7FA4015099D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{809B0448-E23B-4CBF-916A-7FA4015099D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{809B0448-E23B-4CBF-916A-7FA4015099D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77A97FE3-8B80-4182-BD63-63A941D05A26}
 	EndGlobalSection
 EndGlobal

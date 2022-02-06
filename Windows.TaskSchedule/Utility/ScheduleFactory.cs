@@ -182,6 +182,11 @@ namespace Windows.TaskSchedule.Utility
                     string enableValue = p.Attribute(P_ENABLED_FLAG).Value;
                     job.Enabled = enableValue == P_TRUE_STR ? true : false;
                 }
+                if (p.Attributes().Any(c => c.Name.ToString().Equals(P_ENABLED_FLAG)))
+                {
+                    string enableValue = p.Attribute(P_ENABLED_FLAG).Value;
+                    job.Enabled = enableValue == P_TRUE_STR ? true : false;
+                }
                 result.Add(job);
             }
             return result;

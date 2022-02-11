@@ -53,7 +53,8 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Windows.TaskSchedule.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
@@ -98,10 +99,12 @@
     </None>
     <None Include="packages.config" />
     <Content Include="Corn.Net\CronExpress_backup.txt" />
+    <Content Include="readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\install.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Windows.TaskSchedule.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Windows.TaskSchedule.Extends\Windows.TaskSchedule.Extends.csproj">

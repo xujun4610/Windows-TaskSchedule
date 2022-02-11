@@ -27,8 +27,8 @@ namespace Windows.TaskSchedule.WinForms
         private static string _ServiceDisplayName;
         public string ServiceDisplayName { get { return _ServiceDisplayName; } set { _ServiceDisplayName = value; } }
 
-        private static string _LogFolderName;
-        public string LogFolderName { get { return _LogFolderName; } set { _LogFolderName = value; } }
+        private static string _LogFolderPath;
+        public string LogFolderPath { get { return _LogFolderPath; } set { _LogFolderPath = value; } }
 
         private static string _JobFilePath;
         public string JobFilePath { get { return _JobFilePath; } set { _JobFilePath = value; } }
@@ -39,6 +39,12 @@ namespace Windows.TaskSchedule.WinForms
         /// </summary>
         public string MaintenancePath { get { return _MaintenancePath; } set { _MaintenancePath = value; } }
 
+        private static string _HelpFilePath;
+        /// <summary>
+        /// 帮助文件执行路径
+        /// </summary>
+        public string HelpFilePath { get { return _HelpFilePath; } set { _HelpFilePath = value; } }
+        
         private static string _WSInstallPath;
         /// <summary>
         /// windows服务安装路径
@@ -108,9 +114,9 @@ namespace Windows.TaskSchedule.WinForms
         {
             try
             {
-                if (!string.IsNullOrEmpty(_LogFolderName))
+                if (!string.IsNullOrEmpty(_LogFolderPath))
                 {
-                    DirectoryInfo di = new DirectoryInfo(Path.Combine(BaseDirectory, _LogFolderName));
+                    DirectoryInfo di = new DirectoryInfo(Path.Combine(_LogFolderPath));
                     var listInfo = di.GetFiles("*.log", SearchOption.TopDirectoryOnly).ToList();
                     if (listInfo.Count <= 0)
                     {
@@ -138,7 +144,16 @@ namespace Windows.TaskSchedule.WinForms
                 {
                     cfgContent = s.ReadToEnd();
                 }
-                return JsonConvert.DeserializeObject<ServiceConsoleContents>(cfgContent);
+                var replace = "%basedir%\\";
+                var basedir = AppDomain.CurrentDomain.BaseDirectory;
+                var obj = JsonConvert.DeserializeObject<ServiceConsoleContents>(cfgContent);
+                obj.LogFolderPath = obj.LogFolderPath.Replace(replace, basedir);
+                obj.HelpFilePath =  obj.HelpFilePath.Replace(replace, basedir );
+                obj.JobFilePath =   obj.JobFilePath.Replace(replace, basedir);
+                obj.HelpFilePath =  obj.HelpFilePath.Replace(replace, basedir);
+                obj.MaintenancePath = obj.MaintenancePath.Replace(replace, basedir);
+
+                return obj;
             }
             catch (Exception ex)
             {

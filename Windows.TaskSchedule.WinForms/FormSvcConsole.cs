@@ -74,7 +74,7 @@ namespace Windows.TaskSchedule.WinForms
             {
                 if (!string.IsNullOrEmpty(this.cbblog.SelectedItem.ToString()))
                 {
-                    var logFile = Path.Combine(ServiceConsoleContents.BaseDirectory, sc.LogFolderName, this.cbblog.SelectedItem.ToString());
+                    var logFile = Path.Combine(sc.LogFolderPath, this.cbblog.SelectedItem.ToString());
                     Process.Start(APPNAME, logFile);
                 }
             }
@@ -232,7 +232,7 @@ namespace Windows.TaskSchedule.WinForms
             {
                 if (!string.IsNullOrEmpty(sc.WSInstallPath))
                 {
-                    var logFile = Path.Combine(ServiceConsoleContents.BaseDirectory, sc.WSInstallPath);
+                    var logFile = Path.Combine( sc.WSInstallPath);
                     Process.Start(logFile);
                 }
             }
@@ -327,7 +327,7 @@ namespace Windows.TaskSchedule.WinForms
             {
                 if (!string.IsNullOrEmpty(sc.WSInstallPath))
                 {
-                    var logFile = Path.Combine(ServiceConsoleContents.BaseDirectory, sc.MaintenancePath);
+                    var logFile = Path.Combine( sc.MaintenancePath);
                     Process.Start(logFile);
                 }
                 else
@@ -342,10 +342,27 @@ namespace Windows.TaskSchedule.WinForms
 
             }
         }
-
+        /// <summary>
+        /// 操作说明
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bHelpNote_Click(object sender, EventArgs e)
         {
 
+            try
+            {
+
+                if (!string.IsNullOrEmpty(sc.HelpFilePath))
+                {
+                    var path = Path.Combine(sc.HelpFilePath);
+                    Process.Start(path);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         /// <summary>
         /// 中间表初始化
@@ -368,7 +385,7 @@ namespace Windows.TaskSchedule.WinForms
                 MessageBox.Show("修改完毕并保存后，请重启服务以生效！！！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (null != sc)
                 {
-                    var jobFile = Path.Combine(ServiceConsoleContents.BaseDirectory, sc.JobFilePath);
+                    var jobFile = Path.Combine(sc.JobFilePath);
                     Process.Start(APPNAME, jobFile);
                 }
             }
@@ -384,6 +401,27 @@ namespace Windows.TaskSchedule.WinForms
             if (this.WindowState == FormWindowState.Minimized)
             {
                 this.DoShowOnNofityBar();
+            }
+        }
+
+        /// <summary>
+        /// 打开日志目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(sc.LogFolderPath))
+                {
+                    var logFile = Path.Combine( sc.LogFolderPath);
+                    Process.Start(logFile);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

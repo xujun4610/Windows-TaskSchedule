@@ -1,4 +1,5 @@
 ﻿{
+  // 宏：%basedir% = 软件当前运行目录
   //注释：日志文件夹目录
   "LogFolderPath": "%basedir%\\logs",
   //注释：job配置文件位置

@@ -180,12 +180,12 @@ namespace Windows.TaskSchedule.Utility
                 if (p.Attributes().Any(c => c.Name.ToString().Equals(P_ENABLED_FLAG)))
                 {
                     string enableValue = p.Attribute(P_ENABLED_FLAG).Value;
-                    job.Enabled = enableValue == P_TRUE_STR ? true : false;
+                    job.Enabled = enableValue.ToLower() == P_TRUE_STR.ToLower() ? true : false;
                 }
                 if (p.Attributes().Any(c => c.Name.ToString().Equals(P_ENABLED_FLAG)))
                 {
                     string enableValue = p.Attribute(P_ENABLED_FLAG).Value;
-                    job.Enabled = enableValue == P_TRUE_STR ? true : false;
+                    job.Enabled = enableValue.ToLower() == P_TRUE_STR.ToLower() ? true : false;
                 }
                 result.Add(job);
             }

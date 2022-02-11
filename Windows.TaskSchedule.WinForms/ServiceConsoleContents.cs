@@ -147,6 +147,7 @@ namespace Windows.TaskSchedule.WinForms
                 var replace = "%basedir%\\";
                 var basedir = AppDomain.CurrentDomain.BaseDirectory;
                 var obj = JsonConvert.DeserializeObject<ServiceConsoleContents>(cfgContent);
+                obj.WSInstallPath = obj.WSInstallPath.Replace(replace, basedir);
                 obj.LogFolderPath = obj.LogFolderPath.Replace(replace, basedir);
                 obj.HelpFilePath =  obj.HelpFilePath.Replace(replace, basedir );
                 obj.JobFilePath =   obj.JobFilePath.Replace(replace, basedir);

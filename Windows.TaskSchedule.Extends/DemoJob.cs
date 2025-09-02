@@ -19,5 +19,10 @@ namespace Windows.TaskSchedule.Extends
             var a = Convert.ToInt64(rand.NextDouble() * Math.Pow(10,15));
             Logger.Info(str+"-"+a.ToString());
         }
+
+        public void OnError(Exception ex)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

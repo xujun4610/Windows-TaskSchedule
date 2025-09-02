@@ -14,5 +14,11 @@ namespace Windows.TaskSchedule.Test
             var str = System.Configuration.ConfigurationManager.AppSettings["hello"];
             Logger.Info(string.Format("{0}-{1}[{2}]", str, "新GUID", Guid.NewGuid().ToString()));
         }
+
+        public void OnError(Exception ex)
+        {
+            var str = System.Configuration.ConfigurationManager.AppSettings["hello"];
+            Logger.Info(string.Format("{0}-{1}[{2}]", str, "新GUID", Guid.NewGuid().ToString()));
+        }
     }
 }

@@ -59,11 +59,11 @@ namespace Windows.TaskSchedule.Utility
                 MethodInfo method = type.GetMethod(methodName);
                 method.Invoke(instance, parameters);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw ex;
             }
-            
+
         }
 
         public void Dispose()

@@ -202,7 +202,6 @@ namespace Windows.TaskSchedule.Utility
         {
             try
             {
-
                 if (CornUtility.Trigger(job.CornExpress, DateTime.Parse(DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"))))
                 {
                     if (!job.Triggering)

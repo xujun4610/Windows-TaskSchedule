@@ -19,6 +19,11 @@ namespace Windows.TaskSchedule.Test.Jobs
 
         }
 
+        public void OnError(Exception ex)
+        {
+            //处理你的异常错误
+        }
+
         private void DoMuchJobs(BoTest t = null)
         {
             var bo = default(BoTest);

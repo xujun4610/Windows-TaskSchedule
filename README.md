@@ -52,3 +52,8 @@ Windows下的任务调试框架， 支持Cron表达式，支持任务以插件�
 1. 修复一些错误。
 2. 项目升级至.net framework 4.7.2，相关依赖升级（NLog）。
 3. IJob接口类，新增出现无法处理的异常后，执行OnError(Exception ex)方法，业务逻辑接口。
+
+**2025-9-24**
+
+1. 修复一些错误。
+2. 增加WinForm程序的主icon。
